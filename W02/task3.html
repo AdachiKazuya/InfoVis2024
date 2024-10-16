@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <title>W02: task3</title>
+    </head>
+    <body>
+        <label>v0：<input type="text" id="value1"/></label>
+        <input type="text" id="value2"/>
+        <input type="text" id="value3"/><br>
+        <label>v2：<input type="text" id="value4"/></label>
+        <input type="text" id="value5"/>
+        <input type="text" id="value6"/><br>
+        <label>v3：<input type="text" id="value7"/></label>
+        <input type="text" id="value8"/>
+        <input type="text" id="value9"/>
+        <input type="button" value="Check" id="checkButton"><br>
+        <label>area：<input type="text" id="area"></label>
+        <script src = "vec3.js"></script>
+        <script>
+            function AreaOfTriangle(v0,v1,v2){
+                var tmp1 = new Vec3( v0.x-v1.x, v0.y-v1.y, v0.z-v1.z ); 
+                var tmp2 = new Vec3( v0.x-v2.x, v0.y-v2.y, v0.z-v2.z ); 
+                var tmp3 = tmp1.x*tmp2.x + tmp1.y*tmp2.y + tmp1.z*tmp2.z;
+                var ans = Math.sqrt(tmp1.abs()*tmp1.abs() * tmp2.abs()*tmp2.abs() - tmp3*tmp3)/2;
+                return ans;
+            }
+            function butotnClick()
+            {
+                let elem1 = document.getElementById('value1');
+                let elem2 = document.getElementById('value2');
+                let elem3 = document.getElementById('value3');
+                let elem4 = document.getElementById('value4');
+                let elem5 = document.getElementById('value5');
+                let elem6 = document.getElementById('value6');
+                let elem7 = document.getElementById('value7');
+                let elem8 = document.getElementById('value8');
+                let elem9 = document.getElementById('value9');
+                let elem10 = document.getElementById('area');
+                var x0 = Number(elem1.value), y0 = Number(elem2.value), z0 = Number(elem3.value); // (input vertex 0) 
+                var x1 = Number(elem4.value), y1 = Number(elem5.value), z1 = Number(elem6.value); // (input vertex 1) 
+                var x2 = Number(elem7.value), y2 = Number(elem8.value), z2 = Number(elem9.value); // (input vertex 2) 
+                var v0 = new Vec3( x0, y0, z0 ); 
+                var v1 = new Vec3( x1, y1, z1 ); 
+                var v2 = new Vec3( x2, y2, z2 );
+                var S = AreaOfTriangle( v0, v1, v2 ); // (output value)
+                elem10.value = S;
+            }
+            let checkButton = document.getElementById('checkButton');
+            checkButton.addEventListener('click', butotnClick);
+        </script>
+    </body>
+</html>

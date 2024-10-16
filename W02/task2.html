@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <title>W02: task2</title>
+    </head>
+    <body>
+        <input type="text" id="value1"/>
+        <input type="text" id="value2"/>
+        <input type="text" id="value3"/>
+        <input type="button" value="Check" id="checkButton"><br>
+        <label>min：<input type="text" id="min"></label>
+        <label>mid：<input type="text" id="mid"></label>
+        <label>max：<input type="text" id="max"></label>
+        <script src = "vec3.js"></script>
+        <script>
+            function butotnClick(){
+                let elem1 = document.getElementById('value1');
+                let elem2 = document.getElementById('value2');
+                let elem3 = document.getElementById('value3');
+                let elem4 = document.getElementById('min');
+                let elem5 = document.getElementById('mid');
+                let elem6 = document.getElementById('max');
+                var x = Number(elem1.value); y = Number(elem2.value); z = Number(elem3.value);
+                var v = new Vec3( x, y, z ); 
+                var min = v.min(); // 4 (output value) 
+                var mid = v.mid(); // 5 (output value) 
+                var max = v.max(); // 8 (output value)
+                elem4.value = min;
+                elem5.value = mid;
+                elem6.value = max;
+            }
+            let checkButton = document.getElementById('checkButton');
+            checkButton.addEventListener('click', butotnClick);
+        </script>
+    </body>
+</html>

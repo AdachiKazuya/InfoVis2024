@@ -1,0 +1,29 @@
+<!-- <html>
+    <head>
+        <title>W02: Example 08</title>
+    </head>
+    <body>
+        <input type="button"
+                    onclick="e()"
+                    value="Click Me"/>
+        <script>
+            function e() { window.alert('Clicked!'); }
+        </script>
+    </body>
+</html> -->
+
+<html>
+    <head>
+        <title>W02: Example 08</title>
+    </head>
+    <body>
+        <input type="button"
+                    value="Click Me"
+                    id="click_me"/>
+        <script>
+            var element = document.getElementById('click_me');
+            element.addEventListener('click',e);
+            function e() { window.alert('Clicked!'); }
+        </script>
+    </body>
+</html>
