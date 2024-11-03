@@ -1,6 +1,6 @@
-width,color
-20,red
-100,blue
-70,green
-170,navy
-150,white
+name,width,color
+国語の点数,20,red
+算数の点数,100,blue
+理科の点数,70,green
+社会の点数,170,yellow
+英語の点数,150,purple
