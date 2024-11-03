@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <title>Task 2</title>
+    </head>
+    <body>
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<script>
+	 var svg = d3.select("body").append("svg");
+	 d3.csv("https://adachikazuya.github.io/InfoVis2024/W04/w04_task2.csv", function(data){
+        // var 10 = 10;
+        // var 20 = 20;
+	    svg.selectAll("rect")
+		.data(data)
+	        .enter()
+	        .append("rect")
+	        .attr("x", 100) 
+            .attr("y", function(d,i){ return 10 + i* ( 20 + 10 ); }) 
+            .attr("width", function(d){ return d.width; }) 
+            .attr("height", 20) 
+            .style("fill", function(d){ return d.color; })
+        svg.selectAll("text.name")
+        .data(data)
+        .enter()
+        .append("text")
+        .attr("x", 10)  // 名前のx座標（バーの左側）
+        .attr("y", function(d, i){ return 10 + i * (20 + 10) + 15; }) // バーの中央に配置
+        .text(function(d) { return d.name; }) // CSVファイルから名前を取得
+        .style("font-size", "12px") // フォントサイズ
+        .style("fill", "black"); // フォントカラー
+	 } );
+	</script>
+    </body>
+</html>
