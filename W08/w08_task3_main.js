@@ -16,7 +16,7 @@ var data = [
       .append('g')
       .attr('transform', `translate(${width/2}, ${height/2})`);
   
-d3.csv("w08_task1.csv").then( data => {
+d3.csv("https://adachikazuya.github.io/InfoVis2024/W08/w08_task1.csv").then( data => {
       data.forEach(d => {
             d.value = +d.value; 
       });
@@ -29,11 +29,21 @@ d3.csv("w08_task1.csv").then( data => {
             .outerRadius(radius);
 
       svg.selectAll('pie')
-      .data( pie(data) )
-      .enter()
-      .append('path')
-      .attr('d', arc)
-      .attr('fill', 'black')
-      .attr('stroke', 'white')
-      .style('stroke-width', '2px');
+            .data( pie(data) )
+            .enter()
+            .append('path')
+            .attr('d', arc)
+            .attr('fill', d => d.data.color)
+            .attr('stroke', 'white')
+            .style('stroke-width', '2px');
+
+      svg.selectAll('text')
+            .data(pie(data))
+            .enter()
+            .append('text')
+            .attr('transform', d => `translate(${arc.centroid(d)})`) 
+            .attr('text-anchor', 'middle')
+            .attr('font-size', '15px')
+            .attr('font-weight', 'bold')
+            .text(d => d.data.label);
 });  

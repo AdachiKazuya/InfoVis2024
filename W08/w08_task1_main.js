@@ -14,8 +14,7 @@ var chart = svg.append('g')
 const inner_width = width - margin.left - margin.right;
 const inner_height = height - margin.top - margin.bottom;
 
-// Initialize axis scales
-d3.csv("w08_task1.csv").then( data => {
+d3.csv("https://adachikazuya.github.io/InfoVis2024/W08/w08_task1.csv").then( data => {
       data.forEach(d => {
             d.value = +d.value; 
       });
