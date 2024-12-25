@@ -1,5 +1,5 @@
 // Load CSV and initialize
-d3.csv("https://adachikazuya.github.io/InfoVis2024/W08/w10_task01.csv").then(data => {
+d3.csv("https://adachikazuya.github.io/InfoVis2024/W10/w10_task01.csv").then(data => {
     // Convert 'value' to number
     data.forEach(d => d.value = +d.value);
 
