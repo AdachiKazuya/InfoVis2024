@@ -1,4 +1,4 @@
-d3.csv("https://adachikazuya.github.io/InfoVis2024/W10/w10_task01.csv").then(data => {
+d3.csv("w10_task01.csv").then(data => {
     data.forEach(d => d.value = +d.value);
 
     let svg = d3.select('#drawing_region');
@@ -29,28 +29,43 @@ function update(data) {
 
     let svg = d3.select('#drawing_region');
 
-    // Clear SVG before re-drawing
-    svg.selectAll("*").remove();
+    let rects = svg.selectAll("rect")
+        .data(data, d => d.label); 
 
-    // Bind data for rectangles
-    svg.selectAll("rect")
-        .data(data)
-        .enter()
-        .append("rect")
-        .attr("x", padding)
-        .attr("y", (d, i) => padding + i * (height + padding))
-        .attr("width", d => d.value)
-        .attr("height", height)
-        .attr("fill", d => d.color);
+    rects.join(
+        enter => enter.append("rect")
+            .attr("x", padding)
+            .attr("y", (d, i) => padding + i * (height + padding))
+            .attr("width", 0) 
+            .attr("height", height)
+            .attr("fill", d => d.color)
+            .call(enter => enter.transition().duration(1000)
+                .attr("width", d => d.value) 
+                .attr("y", (d, i) => padding + i * (height + padding))),
+        update => update.call(update => update.transition().duration(1000)
+            .attr("y", (d, i) => padding + i * (height + padding)) 
+            .attr("width", d => d.value)), 
+        exit => exit.call(exit => exit.transition().duration(500)
+            .attr("width", 0) 
+            .remove())
+    );
 
-    // Bind data for labels
-    svg.selectAll("text")
-        .data(data)
-        .enter()
-        .append("text")
-        .attr("x", padding * 2)
-        .attr("y", (d, i) => padding + i * (height + padding) + height / 1.5)
-        .text(d => d.label)
-        .attr("fill", "black")
-        .attr("font-size", "12px");
+    let labels = svg.selectAll("text")
+        .data(data, d => d.label); 
+
+    labels.join(
+        enter => enter.append("text")
+            .attr("x", padding * 2)
+            .attr("y", (d, i) => padding + i * (height + padding) + height / 1.5) 
+            .attr("fill", "black")
+            .attr("font-size", "12px")
+            .text(d => d.label)
+            .call(enter => enter.transition().duration(1000)
+                .attr("y", (d, i) => padding + i * (height + padding) + height / 1.5)),
+        update => update.call(update => update.transition().duration(1000)
+            .attr("y", (d, i) => padding + i * (height + padding) + height / 1.5)), 
+        exit => exit.call(exit => exit.transition().duration(500)
+            .attr("opacity", 0) 
+            .remove())
+    );
 }
