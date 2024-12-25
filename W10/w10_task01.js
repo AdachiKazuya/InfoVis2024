@@ -1,4 +1,4 @@
-d3.csv("w10_task01.csv").then(data => {
+d3.csv("https://adachikazuya.github.io/InfoVis2024/W10/w10_task01.csv").then(data => {
     data.forEach(d => d.value = +d.value);
 
     let svg = d3.select('#drawing_region');
