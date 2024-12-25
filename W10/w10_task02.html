@@ -11,9 +11,17 @@
             font-size: 12px;
             padding: 2px 8px;
         }
+        #controls {
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
+    <div id="controls">
+        <button id="sortX">Sort by X</button>
+        <button id="sortY">Sort by Y</button>
+        <button id="reset">Reset</button>
+    </div>
     <div id="tooltip"></div>
     <svg id="drawing_region" width="256" height="256"></svg>
     <script src="https://d3js.org/d3.v6.min.js"></script>
