@@ -1,7 +1,6 @@
 d3.csv("https://adachikazuya.github.io/InfoVis2024/FinalTask/data.csv").then(data => {
-    console.log(data);
     data.forEach(d => {
-        d.GDP = +d.GDP;   // GDPを数値に変換xx
+        d.GDP = +d.GDP;   // GDPを数値に変換
         d.GNI = +d.GNI;   // GNIを数値に変換
         d.population = +d.population;  // 人口を数値に変換
     });
@@ -20,7 +19,8 @@ d3.csv("https://adachikazuya.github.io/InfoVis2024/FinalTask/data.csv").then(dat
         .attr("class", "scatter-point")
         .attr("cx", d => xScale(d.GDP))
         .attr("cy", d => yScale(d.GNI))
-        .attr("r", 5);
+        .attr("r", 5)
+        .attr("fill", d => d.population === 1 ? "red" : "blue");  // populationが1なら赤、0なら青
 
     scatterSvg.selectAll("text.label")
         .data(data)
@@ -30,10 +30,10 @@ d3.csv("https://adachikazuya.github.io/InfoVis2024/FinalTask/data.csv").then(dat
         .attr("y", d => yScale(d.GNI) - 5)
         .text(d => d.country);
 
-    const popCount = d3.rollup(data, v => v.length, d => d.population > 0 ? 1 : 0);
+    const popGroup = d3.group(data, d => d.populationChange);
     const barData = [
-        {category: "増加", count: popCount.get(1) || 0},
-        {category: "減少", count: popCount.get(0) || 0}
+        {category: "増加", count: popGroup.get("increase") ? popGroup.get("increase").length : 0},
+        {category: "減少", count: popGroup.get("decrease") ? popGroup.get("decrease").length : 0}
     ];
 
     const barWidth = 400, barHeight = 300;
