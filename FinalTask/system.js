@@ -37,7 +37,7 @@ d3.csv("https://adachikazuya.github.io/InfoVis2024/FinalTask/data.csv").then(dat
     scatterSvg.append("text")
         .attr("transform", "rotate(-90)")
         .attr("x", -scatterHeight / 2)
-        .attr("y", -30)
+        .attr("y", 15)
         .attr("text-anchor", "middle")
         .text("GNIの変化量");
 
@@ -112,7 +112,7 @@ d3.csv("https://adachikazuya.github.io/InfoVis2024/FinalTask/data.csv").then(dat
     barSvg.append("text")
         .attr("transform", "rotate(-90)")
         .attr("x", -barHeight / 2)
-        .attr("y", -30)
+        .attr("y", 15)
         .attr("text-anchor", "middle")
         .text("国の数");
 
