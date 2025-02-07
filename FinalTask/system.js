@@ -1,5 +1,4 @@
 d3.csv("https://adachikazuya.github.io/InfoVis2024/FinalTask/data.csv").then(data => {
-    console.log(data);
     data.forEach(d => {
         d.GDP = +d.GDP;   // GDPを数値に変換
         d.GNI = +d.GNI;   // GNIを数値に変換
@@ -9,11 +8,16 @@ d3.csv("https://adachikazuya.github.io/InfoVis2024/FinalTask/data.csv").then(dat
     });
 
     const scatterWidth = 600, scatterHeight = 400;
-    const xScale = d3.scaleLinear().domain([d3.min(data, d => d.GDPChange), d3.max(data, d => d.GDPChange)]).range([50, scatterWidth - 50]);
-    const yScale = d3.scaleLinear().domain([d3.min(data, d => d.GNIChange), d3.max(data, d => d.GNIChange)]).range([scatterHeight - 50, 50]);
+    const xScale = d3.scaleLinear()
+        .domain([d3.min(data, d => d.GDPChange), d3.max(data, d => d.GDPChange)])
+        .range([50, scatterWidth - 50]);
+
+    const yScale = d3.scaleLinear()
+        .domain([d3.min(data, d => d.GNIChange), d3.max(data, d => d.GNIChange)])
+        .range([scatterHeight - 50, 50]);
 
     const scatterSvg = d3.select("#scatterPlot");
-    
+
     // タイトルの追加
     scatterSvg.append("text")
         .attr("x", scatterWidth / 2)
@@ -37,8 +41,13 @@ d3.csv("https://adachikazuya.github.io/InfoVis2024/FinalTask/data.csv").then(dat
         .attr("text-anchor", "middle")
         .text("GNIの変化量");
 
-    scatterSvg.append("g").attr("transform", `translate(0, ${scatterHeight - 50})`).call(d3.axisBottom(xScale));
-    scatterSvg.append("g").attr("transform", "translate(50,0)").call(d3.axisLeft(yScale));
+    scatterSvg.append("g")
+        .attr("transform", `translate(0, ${scatterHeight - 50})`)
+        .call(d3.axisBottom(xScale));
+
+    scatterSvg.append("g")
+        .attr("transform", "translate(50,0)")
+        .call(d3.axisLeft(yScale));
 
     scatterSvg.selectAll("circle")
         .data(data)
@@ -47,7 +56,7 @@ d3.csv("https://adachikazuya.github.io/InfoVis2024/FinalTask/data.csv").then(dat
         .attr("cx", d => xScale(d.GDPChange))
         .attr("cy", d => yScale(d.GNIChange))
         .attr("r", 5)
-        .attr("fill", d => d.population === 1 ? "red" : "blue");  // populationが1なら赤、0なら青
+        .attr("fill", d => d.population > 0 ? "red" : "blue");  // populationが1なら赤、0なら青
 
     scatterSvg.selectAll("text.label")
         .data(data)
@@ -57,16 +66,30 @@ d3.csv("https://adachikazuya.github.io/InfoVis2024/FinalTask/data.csv").then(dat
         .attr("y", d => yScale(d.GNIChange) - 5)
         .text(d => d.country);
 
-    // populationChangeに基づいて棒グラフの色を設定
-    const popGroup = d3.group(data, d => d.populationChange);
+    // 人口の増加・減少のカウント
+    let increaseCount = 0, decreaseCount = 0;
+    data.forEach(d => {
+        if (d.population > 0) {
+            increaseCount++;
+        } else {
+            decreaseCount++;
+        }
+    });
+
     const barData = [
-        {category: "増加", count: popGroup.get("increase") ? popGroup.get("increase").length : 0, color: "red"},
-        {category: "減少", count: popGroup.get("decrease") ? popGroup.get("decrease").length : 0, color: "blue"}
+        { category: "増加", count: increaseCount, color: "red" },
+        { category: "減少", count: decreaseCount, color: "blue" }
     ];
 
     const barWidth = 400, barHeight = 300;
-    const xBarScale = d3.scaleBand().domain(barData.map(d => d.category)).range([50, barWidth - 50]).padding(0.3);
-    const yBarScale = d3.scaleLinear().domain([0, d3.max(barData, d => d.count)]).range([barHeight - 50, 50]);
+    const xBarScale = d3.scaleBand()
+        .domain(barData.map(d => d.category))
+        .range([50, barWidth - 50])
+        .padding(0.3);
+
+    const yBarScale = d3.scaleLinear()
+        .domain([0, d3.max(barData, d => d.count)])
+        .range([barHeight - 50, 50]);
 
     const barSvg = d3.select("#barChart");
 
@@ -93,8 +116,13 @@ d3.csv("https://adachikazuya.github.io/InfoVis2024/FinalTask/data.csv").then(dat
         .attr("text-anchor", "middle")
         .text("国数");
 
-    barSvg.append("g").attr("transform", `translate(0, ${barHeight - 50})`).call(d3.axisBottom(xBarScale));
-    barSvg.append("g").attr("transform", "translate(50,0)").call(d3.axisLeft(yBarScale));
+    barSvg.append("g")
+        .attr("transform", `translate(0, ${barHeight - 50})`)
+        .call(d3.axisBottom(xBarScale));
+
+    barSvg.append("g")
+        .attr("transform", "translate(50,0)")
+        .call(d3.axisLeft(yBarScale));
 
     barSvg.selectAll("rect")
         .data(barData)
