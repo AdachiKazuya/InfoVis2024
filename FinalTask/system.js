@@ -1,6 +1,6 @@
 d3.csv("https://vizlab-kobe-lecture.github.io/InfoVis2024/FinalTask/data.csv").then(data => {
     data.forEach(d => {
-        d.GDP = +d.GDP;   // GDPを数値に変換
+        d.GDP = +d.GDP;   // GDPを数値に変換xx
         d.GNI = +d.GNI;   // GNIを数値に変換
         d.population = +d.population;  // 人口を数値に変換
     });
