@@ -1,4 +1,5 @@
 d3.csv("https://adachikazuya.github.io/InfoVis2024/FinalTask/data.csv").then(data => {
+    console.log(data);
     data.forEach(d => {
         d.GDP = +d.GDP;   // GDPを数値に変換xx
         d.GNI = +d.GNI;   // GNIを数値に変換
