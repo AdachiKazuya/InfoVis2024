@@ -1,4 +1,4 @@
-d3.csv("https://adachikazuya.github.io/InfoVis2024/FinalTask/data.csv").then(data => {
+d3.csv("https://adachikazuya.github.io/InfoVis2024/FinalTask/data.xlsx").then(data => {
     console.log(data);
     data.forEach(d => {
         d.GDP = +d.GDP;   // GDPを数値に変換xx
